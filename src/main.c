@@ -19,7 +19,7 @@ void bdv_decode_str(char *src, int str_index)
 }
 
 char *brd_decode_str(char *src, char *dst)
-{
+{    
     if (!*src)
         return NULL;
     int i;
@@ -28,9 +28,9 @@ char *brd_decode_str(char *src, char *dst)
         if (!src[i])
             break;
         char n = ~(4*src[i] | (src[i] & 0xC0) >> 6);
-        if (n==(char)0xD7)
-            n = '\0';
         if (n==(char)0xCB)
+            n = '\r';
+        if (n==(char)0xD7)
             n = '\n';
         dst[i] = n;
     }
@@ -95,13 +95,13 @@ int main(int argc, char *argv[])
         printf("unknown format: %s\n", argv[1]);
         return 1;
     }
-    FILE *src = fopen(argv[2], "r");
+    FILE *src = fopen(argv[2], "rb");
     if (!src)
     {
         printf("can't open %s\n", argv[2]);
         return 1;
     }
-    FILE *dst = fopen(argv[3], "w");
+    FILE *dst = fopen(argv[3], "wb");
     if (!dst)
     {
         printf("can't open %s\n", argv[3]);
