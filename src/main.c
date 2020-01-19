@@ -19,7 +19,7 @@ void bdv_decode_str(char *src, int str_index)
 }
 
 char *brd_decode_str(char *src, char *dst)
-{    
+{
     if (!*src)
         return NULL;
     int i;
@@ -28,10 +28,9 @@ char *brd_decode_str(char *src, char *dst)
         if (!src[i])
             break;
         char n = ~(4*src[i] | (src[i] & 0xC0) >> 6);
-            
         if (n==(char)0xD7)
             n = '\0';
-        if(n == (char)0xCB)
+        if (n==(char)0xCB)
             n = '\n';
         dst[i] = n;
     }
